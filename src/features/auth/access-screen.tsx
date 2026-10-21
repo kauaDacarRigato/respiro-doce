@@ -172,13 +172,10 @@ export function AccessScreen() {
                         recovery || mode === "signup" ? "new-password" : "current-password"
                       }
                       required
-                      minLength={recovery || mode === "signup" ? 12 : 1}
                       maxLength={128}
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      placeholder={
-                        recovery || mode === "signup" ? "Pelo menos 12 caracteres" : "Sua senha"
-                      }
+                      placeholder={recovery ? "Sua nova senha" : "Sua senha"}
                       disabled={busy}
                     />
                     <button
@@ -198,7 +195,6 @@ export function AccessScreen() {
                       type="password"
                       autoComplete="new-password"
                       required
-                      minLength={12}
                       maxLength={128}
                       value={confirmation}
                       onChange={(e) => setConfirmation(e.target.value)}
