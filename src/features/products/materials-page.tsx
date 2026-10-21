@@ -35,6 +35,7 @@ import {
   type MaterialKind,
 } from "./material-domain";
 import { MaterialEditor, getMaterialDraft, type MaterialDraft } from "./material-editor";
+import { ProductTabs } from "./product-tabs";
 import { useCatalogSync } from "./use-catalog-sync";
 
 const money = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" });
@@ -139,12 +140,7 @@ export function MaterialsPage() {
           <Plus size={19} /> Novo cadastro
         </button>
       </header>
-      <div className="product-tabs">
-        <span aria-current="page">Insumos e embalagens</span>
-        <span className="tab-upcoming">
-          Receitas <small>Em breve</small>
-        </span>
-      </div>
+      <ProductTabs active="materials" />
       {message && (
         <p className="notice success" role="status">
           {message}

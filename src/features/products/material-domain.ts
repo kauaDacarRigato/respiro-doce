@@ -164,7 +164,9 @@ export function materialError(error: { code?: string | undefined; message?: stri
   if (error.code === "23505")
     return "Já existe um cadastro com esse nome. Use outro nome ou edite o existente.";
   if (error.code === "23503")
-    return "Este insumo está em uso. Ajuste as receitas relacionadas antes de excluir.";
+    return error.message?.startsWith("Usado em:")
+      ? error.message
+      : "Este insumo está em uso. Ajuste as receitas relacionadas antes de excluir ou alterar a unidade.";
   if (error.code === "P0002") return "Este cadastro não está mais disponível. Atualize a lista.";
   if (error.code === "42501" || error.code === "PGRST301")
     return "Seu acesso expirou. Entre novamente; seu rascunho está preservado.";

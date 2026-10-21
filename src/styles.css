@@ -1281,3 +1281,262 @@ input:focus-visible {
     font-size: 11px;
   }
 }
+
+/* Receitas: memória de cálculo legível do celular ao desktop. */
+.product-tabs a {
+  padding: 14px 2px;
+  color: var(--muted-foreground);
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  font-size: 14px;
+  font-weight: 600;
+}
+.product-tabs a[aria-current="page"] {
+  color: var(--primary);
+  border-color: var(--primary);
+}
+.recipe-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr));
+  gap: 20px;
+  align-items: start;
+}
+.recipe-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 22px;
+  min-width: 0;
+}
+.recipe-card-heading {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.recipe-card-heading > div:first-of-type {
+  flex: 1;
+  min-width: 0;
+}
+.recipe-card h2 {
+  font-size: 18px;
+  font-weight: 650;
+  overflow-wrap: anywhere;
+}
+.recipe-card-heading p {
+  color: var(--muted-foreground);
+  font-size: 12px;
+  margin-top: 5px;
+}
+.recipe-icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  background: color-mix(in oklch, var(--primary) 10%, transparent);
+  color: var(--primary);
+  border-radius: 14px;
+  flex-shrink: 0;
+}
+.recipe-card-prices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: space-between;
+  margin: 24px 0 18px;
+}
+.recipe-card-prices > div {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 0;
+}
+.recipe-card-prices span {
+  color: var(--muted-foreground);
+  font-size: 12px;
+}
+.recipe-card-prices strong {
+  color: var(--primary);
+  font-size: 30px;
+  font-weight: 650;
+  overflow-wrap: anywhere;
+}
+.recipe-card-prices b {
+  font-size: 20px;
+  overflow-wrap: anywhere;
+}
+.recipe-card-details {
+  border-top: 1px solid var(--border);
+  padding-top: 6px;
+}
+.recipe-card-details > summary,
+.calculation-details > summary {
+  cursor: pointer;
+  padding-block: 14px;
+  font-size: 13px;
+  font-weight: 600;
+  min-height: 44px;
+}
+.saved-components > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  font-size: 13px;
+  border-bottom: 1px solid var(--border);
+}
+.saved-components small {
+  display: block;
+  color: var(--muted-foreground);
+  margin-top: 4px;
+}
+.recipe-section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 12px;
+  gap: 12px;
+}
+.recipe-section-heading h3 {
+  font-size: 15px;
+  font-weight: 650;
+}
+.recipe-section-heading > span {
+  color: var(--muted-foreground);
+  font-size: 12px;
+}
+.recipe-components {
+  display: grid;
+  gap: 12px;
+}
+.recipe-component {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 12px;
+  background: var(--background);
+}
+.component-name {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+.component-name strong {
+  overflow-wrap: anywhere;
+}
+.recipe-picker {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 12px;
+  display: grid;
+  gap: 8px;
+}
+.recipe-picker > button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  min-height: 48px;
+  gap: 12px;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+  font-size: 14px;
+}
+.recipe-picker > button:hover {
+  background: var(--accent);
+}
+.recipe-picker > button small {
+  display: block;
+  font-size: 12px;
+  color: var(--muted-foreground);
+  margin-top: 4px;
+}
+.picker-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+}
+.recipe-picker button:disabled {
+  opacity: 0.45;
+}
+.recipe-price-hero {
+  background: color-mix(in oklch, var(--primary) 9%, var(--card));
+  border: 1px solid color-mix(in oklch, var(--primary) 25%, var(--border));
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 12px;
+}
+.recipe-price-hero > span {
+  font-size: 13px;
+  color: var(--muted-foreground);
+}
+.recipe-price-hero > strong {
+  color: var(--primary);
+  font-size: 36px;
+  font-weight: 650;
+  overflow-wrap: anywhere;
+}
+.recipe-price-hero > small {
+  font-size: 12px;
+  color: var(--muted-foreground);
+}
+.cost-breakdown {
+  display: grid;
+  gap: 12px;
+  padding: 20px 0 10px;
+  font-size: 13px;
+}
+.cost-breakdown > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.cost-breakdown dt {
+  color: var(--muted-foreground);
+}
+.cost-breakdown dd {
+  text-align: right;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+.cost-total {
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
+}
+.estimated-profit dd {
+  color: var(--primary);
+}
+.calculation-details {
+  border-top: 1px solid var(--border);
+  font-size: 12px;
+  color: var(--muted-foreground);
+}
+.calculation-details p {
+  line-height: 1.7;
+  margin-bottom: 12px;
+  overflow-wrap: anywhere;
+}
+.calculation-details .field {
+  margin: 12px 0;
+}
+.recipe-sheet .form-fields {
+  min-width: 0;
+}
+@media (max-width: 760px) {
+  .recipe-card {
+    padding: 16px;
+  }
+  .recipe-card-heading {
+    flex-wrap: wrap;
+  }
+  .recipe-card-heading .row-actions {
+    margin-left: auto;
+  }
+}

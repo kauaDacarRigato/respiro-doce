@@ -39,7 +39,10 @@ export function AccountHome({ children }: { children?: ReactNode }) {
         <Home size={21} />
         <span>Início</span>
       </Link>
-      <Link to="/produtos" className={location.pathname === "/produtos" ? "active" : ""}>
+      <Link
+        to="/produtos"
+        className={["/produtos", "/receitas"].includes(location.pathname) ? "active" : ""}
+      >
         <Package size={21} />
         <span>Produtos</span>
       </Link>
@@ -130,14 +133,14 @@ export function AccountHome({ children }: { children?: ReactNode }) {
               <h1>
                 Seu próximo passo:
                 <br />
-                <span>organizar os ingredientes.</span>
+                <span>descobrir o preço de cada doce.</span>
               </h1>
               <p>
-                Sua conta está pronta. Cadastre os insumos e as embalagens que você compra para
-                construir a base dos seus preços.
+                Cadastre os ingredientes e as embalagens, monte suas receitas e acompanhe o custo de
+                cada unidade.
               </p>
-              <Link to="/produtos" className="primary-button compact-button">
-                Cadastrar insumos <ArrowUpRight size={19} />
+              <Link to="/receitas" className="primary-button compact-button">
+                Montar receitas <ArrowUpRight size={19} />
               </Link>
               <div className="home-tip">
                 <Package size={26} />

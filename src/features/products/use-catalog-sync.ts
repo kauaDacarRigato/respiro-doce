@@ -11,11 +11,15 @@ export function useCatalogSync(ownerId: string) {
     let active = true;
     let known: number | null = null;
     let checking = false;
-    const key = ["materials", ownerId];
+    const keys = [
+      ["materials", ownerId],
+      ["recipes", ownerId],
+      ["recipe-preview", ownerId],
+    ];
     const refresh = async () => {
       if (!active) return;
-      await cache.cancelQueries({ queryKey: key });
-      if (active) await cache.invalidateQueries({ queryKey: key });
+      await Promise.all(keys.map((queryKey) => cache.cancelQueries({ queryKey })));
+      if (active) await Promise.all(keys.map((queryKey) => cache.invalidateQueries({ queryKey })));
     };
     const check = async () => {
       if (!active || checking || !navigator.onLine || document.visibilityState === "hidden") return;
