@@ -1,6 +1,6 @@
 # Arquitetura do Precificador e Caixa — Respiro Doce
 
-Status: desenho técnico das etapas 1 a 3. Este documento descreve o plano completo; consulte [etapa-4.md](etapa-4.md) para o estado real da primeira implementação de banco e autenticação.
+Status: desenho técnico das etapas 1 a 3. Este documento descreve o plano completo; consulte [etapa-5.md](etapa-5.md) para o estado real do catálogo e [etapa-4.md](etapa-4.md) para a fundação de autenticação.
 Data: 21/10/2026.
 
 ## 1. Escopo e base existente
@@ -232,10 +232,10 @@ Constraints para limites e coerência de unidades/tipos; rejeitar valores que ul
 
 ## 13. Situação da entrega e próximos passos
 
-Esta entrega documenta o modelo lógico, contratos financeiros e estratégia de consistência.
-Não contém migrações aplicadas, projeto Supabase provisionado, integração ativa, telas novas ou testes executados contra banco.
-Próxima implementação: identificar o backend do projeto Lovable, preparar banco isolado, criar esquema/migrações e implementar autenticação/RLS com testes entre contas.
-As etapas 5 a 12 concretizam os módulos e validam os contratos descritos aqui.
+Este documento registra o modelo lógico, contratos financeiros e estratégia de consistência do projeto completo.
+A fundação de autenticação e o catálogo de insumos/embalagens foram implementados e suas migrações aplicadas ao projeto confirmado, conforme os relatórios das etapas 4 e 5.
+Os demais módulos ainda serão construídos. Próxima implementação: receitas e precificação na etapa 6, incluindo proteção das referências aos insumos usados.
+As etapas seguintes concretizam os módulos restantes e validam o conjunto.
 
 ## Referências técnicas consultadas
 

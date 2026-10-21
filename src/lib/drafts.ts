@@ -14,8 +14,10 @@ export function saveDraft(ownerId: string, form: string, value: Record<string, u
       key(ownerId, form),
       JSON.stringify({ expiresAt: Date.now() + ttl, value }),
     );
+    return true;
   } catch {
     /* O formulário em memória continua disponível se o armazenamento estiver bloqueado. */
+    return false;
   }
 }
 
@@ -46,5 +48,13 @@ export function clearDrafts() {
       if (entry.startsWith(prefix)) localStorage.removeItem(entry);
   } catch {
     /* Armazenamento indisponível. */
+  }
+}
+
+export function removeDraft(ownerId: string, form: string) {
+  try {
+    localStorage.removeItem(key(ownerId, form));
+  } catch {
+    /* Opcional. */
   }
 }

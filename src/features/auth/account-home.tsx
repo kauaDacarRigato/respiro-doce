@@ -1,14 +1,27 @@
 import { useQuery } from "@tanstack/react-query";
-import { CakeSlice, LogOut, ShieldCheck, CheckCircle2 } from "lucide-react";
+import { Link, useLocation } from "@tanstack/react-router";
+import {
+  CakeSlice,
+  LogOut,
+  Home,
+  Package,
+  Users,
+  Wallet,
+  ChartNoAxesCombined,
+  ArrowUpRight,
+} from "lucide-react";
+import type { ReactNode } from "react";
 import { useAuth } from "./auth-provider";
 import { getSupabase } from "@/lib/supabase";
 
-export function AccountHome() {
+export function AccountHome({ children }: { children?: ReactNode }) {
   const { session, signOut, error } = useAuth();
+  const location = useLocation();
   const account = useQuery({
     queryKey: ["account", session?.user.id],
     enabled: Boolean(session),
     retry: false,
+    staleTime: Infinity,
     queryFn: async () => {
       const client = getSupabase();
       if (!client) throw new Error("Conexão indisponível.");
@@ -20,10 +33,33 @@ export function AccountHome() {
       return true;
     },
   });
-
+  const links = (
+    <>
+      <Link to="/" className={location.pathname === "/" ? "active" : ""}>
+        <Home size={21} />
+        <span>Início</span>
+      </Link>
+      <Link to="/produtos" className={location.pathname === "/produtos" ? "active" : ""}>
+        <Package size={21} />
+        <span>Produtos</span>
+      </Link>
+      <button disabled title="Em breve">
+        <Users size={21} />
+        <span>Clientes</span>
+      </button>
+      <button disabled title="Em breve">
+        <Wallet size={21} />
+        <span>Caixa</span>
+      </button>
+      <button disabled title="Em breve">
+        <ChartNoAxesCombined size={21} />
+        <span>Resumo</span>
+      </button>
+    </>
+  );
   return (
-    <main className="account-layout">
-      <header className="account-header">
+    <main className="workspace">
+      <aside className="workspace-sidebar">
         <a className="brand" href="/">
           <span className="brand-mark">
             <CakeSlice size={26} />
@@ -32,29 +68,52 @@ export function AccountHome() {
             Respiro Doce<small>PRECIFICADOR E CAIXA</small>
           </span>
         </a>
-        <button
-          className="secondary-button"
-          onClick={() => {
-            void signOut();
-          }}
-        >
-          <LogOut size={18} /> Sair
-        </button>
-      </header>
-      <section className="welcome-card">
-        <span className="eyebrow">SEU ESPAÇO DE TRABALHO</span>
-        <h1>
-          Bem-vindo à<br />
-          Respiro Doce.
-        </h1>
-        <p className="account-email">{session?.user.email}</p>
+        <nav aria-label="Menu principal">{links}</nav>
+        <div className="sidebar-bottom">
+          <span>{session?.user.email}</span>
+          <button
+            className="secondary-button"
+            onClick={() => {
+              void signOut();
+            }}
+          >
+            <LogOut size={17} /> Sair da conta
+          </button>
+        </div>
+      </aside>
+      <div className="workspace-main">
+        <header className="mobile-app-header">
+          <a className="brand" href="/">
+            <span className="brand-mark">
+              <CakeSlice size={23} />
+            </span>
+            <span>
+              Respiro Doce<small>PRECIFICADOR E CAIXA</small>
+            </span>
+          </a>
+          <button
+            className="icon-button"
+            aria-label="Sair da conta"
+            onClick={() => {
+              void signOut();
+            }}
+          >
+            <LogOut size={20} />
+          </button>
+        </header>
+        {error && (
+          <p className="notice danger" role="alert">
+            {error}
+          </p>
+        )}
         {account.isPending ? (
-          <p role="status">Preparando sua área…</p>
+          <p className="loading-screen" role="status">
+            Preparando sua área…
+          </p>
         ) : account.isError ? (
-          <>
-            <p className="notice danger" role="alert">
-              {account.error.message}
-            </p>
+          <section className="empty-state">
+            <h1>Não foi possível preparar sua área</h1>
+            <p role="alert">{account.error.message}</p>
             <button
               className="secondary-button"
               onClick={() => {
@@ -63,28 +122,40 @@ export function AccountHome() {
             >
               Tentar novamente
             </button>
-          </>
+          </section>
         ) : (
-          <>
-            <div className="ready-badge">
-              <CheckCircle2 size={20} /> Sua conta está pronta.
-            </div>
-            <p>
-              Em breve, você poderá cadastrar seus produtos e acompanhar vendas, clientes e caixa
-              por aqui.
-            </p>
-          </>
+          (children ?? (
+            <section className="home-overview">
+              <span className="eyebrow">CADA RECEITA COMEÇA AQUI</span>
+              <h1>
+                Seu próximo passo:
+                <br />
+                <span>organizar os ingredientes.</span>
+              </h1>
+              <p>
+                Sua conta está pronta. Cadastre os insumos e as embalagens que você compra para
+                construir a base dos seus preços.
+              </p>
+              <Link to="/produtos" className="primary-button compact-button">
+                Cadastrar insumos <ArrowUpRight size={19} />
+              </Link>
+              <div className="home-tip">
+                <Package size={26} />
+                <div>
+                  <strong>Uma base bem preenchida faz diferença.</strong>
+                  <p>
+                    Informe quantidade e preço da embalagem. O custo por grama, mL ou unidade é
+                    calculado para você.
+                  </p>
+                </div>
+              </div>
+            </section>
+          ))
         )}
-        {error && (
-          <p className="notice danger" role="alert">
-            {error}
-          </p>
-        )}
-        <div className="privacy-note">
-          <ShieldCheck size={18} />
-          <span>Esta área pertence à sua conta.</span>
-        </div>
-      </section>
+      </div>
+      <nav className="mobile-bottom-nav" aria-label="Menu principal no celular">
+        {links}
+      </nav>
     </main>
   );
 }
