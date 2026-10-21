@@ -1,6 +1,6 @@
 # Arquitetura do Precificador e Caixa — Respiro Doce
 
-Status: desenho técnico das etapas 1 a 3. Não representa banco implantado, segurança validada ou funcionalidades implementadas.
+Status: desenho técnico das etapas 1 a 3. Este documento descreve o plano completo; consulte [etapa-4.md](etapa-4.md) para o estado real da primeira implementação de banco e autenticação.
 Data: 21/10/2026.
 
 ## 1. Escopo e base existente
@@ -8,7 +8,7 @@ Data: 21/10/2026.
 Manter a base Lovable existente: React 19, TypeScript, TanStack Start/Router/Query, Vite, Tailwind e componentes Radix.
 Não substituir o projeto por um aplicativo paralelo. Respeitar AGENTS.md e não reescrever histórico publicado.
 Backend escolhido para implementação: PostgreSQL com Supabase Auth e Realtime.
-O projeto Supabase de destino ainda precisa ser identificado e sua vinculação ao Lovable verificada; não criar ou modificar um banco com base em suposição.
+O proprietário confirmou o projeto Supabase Respiro Doce, referência gogzturzsxayfxakpjcz. Não confundir com o projeto separado chamado precificador.
 
 Sem estoque, equipe/perfis de acesso, OCR de rótulos ou histórico de auditoria de exclusões nesta versão.
 Cada conta possui seu próprio conjunto de dados. Usar a mesma conta em aparelhos diferentes.
