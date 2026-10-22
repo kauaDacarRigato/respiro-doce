@@ -1540,3 +1540,106 @@ input:focus-visible {
     margin-left: auto;
   }
 }
+
+/* Vendas e clientes */
+.heading-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.sales-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 12px;
+  margin-top: 28px;
+}
+.sales-filters .field {
+  flex: 1;
+  min-width: 150px;
+}
+.sale-customer {
+  font-size: 13px;
+  margin-top: 18px;
+  color: var(--muted-foreground);
+  overflow-wrap: anywhere;
+}
+.sale-customer small {
+  display: block;
+  margin-top: 5px;
+}
+.sale-total-hero {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  background: var(--card);
+  padding: 20px;
+  border-radius: 14px;
+}
+.sale-total-hero span {
+  color: var(--muted-foreground);
+  font-size: 13px;
+}
+.sale-total-hero strong {
+  font-size: 26px;
+  color: var(--primary);
+  overflow-wrap: anywhere;
+}
+.profit-value {
+  color: var(--primary);
+}
+.loss-value {
+  color: var(--destructive);
+}
+.check-field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  line-height: 1.6;
+  min-height: 44px;
+  cursor: pointer;
+}
+.check-field input {
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
+  accent-color: var(--primary);
+}
+.customer-modes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+}
+.product-choice {
+  justify-content: space-between;
+  text-align: left;
+  overflow-wrap: anywhere;
+}
+.customer-history {
+  display: grid;
+  gap: 16px;
+  margin-top: 20px;
+}
+.customer-card .secondary-button {
+  width: 100%;
+}
+@media (max-width: 760px) {
+  .heading-actions {
+    width: 100%;
+  }
+  .heading-actions > button {
+    flex: 1;
+  }
+  .sales-filters .field {
+    min-width: 130px;
+  }
+  .sales-filters .field:last-of-type {
+    flex-basis: 100%;
+  }
+  .sale-card .recipe-card-heading > div:first-child {
+    flex-basis: 160px;
+  }
+}

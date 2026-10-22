@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useAuth } from "@/features/auth/auth-provider";
 import { AccessScreen } from "@/features/auth/access-screen";
+import { SalesPage } from "@/features/sales/sales-page";
 import { AccountHome } from "@/features/auth/account-home";
 
 // No head() here: the home route inherits title/description/og/twitter from
@@ -20,5 +21,9 @@ function Index() {
       </main>
     );
   if (!session || recovery) return <AccessScreen />;
-  return <AccountHome />;
+  return (
+    <AccountHome>
+      <SalesPage />
+    </AccountHome>
+  );
 }

@@ -1,6 +1,6 @@
 # Arquitetura do Precificador e Caixa — Respiro Doce
 
-Status: desenho técnico das etapas 1 a 3. Este documento descreve o plano completo; consulte [etapa-6.md](etapa-6.md) para o estado real das receitas/precificação e [etapa-5.md](etapa-5.md) para o catálogo de insumos e [etapa-4.md](etapa-4.md) para a fundação de autenticação.
+Status: desenho técnico das etapas 1 a 3. Este documento descreve o plano completo; consulte [etapa-7.md](etapa-7.md) para vendas/clientes e [etapa-6.md](etapa-6.md) para receitas/precificação e [etapa-5.md](etapa-5.md) para o catálogo de insumos e [etapa-4.md](etapa-4.md) para a fundação de autenticação.
 Data: 21/10/2026.
 
 ## 1. Escopo e base existente
@@ -233,8 +233,8 @@ Constraints para limites e coerência de unidades/tipos; rejeitar valores que ul
 ## 13. Situação da entrega e próximos passos
 
 Este documento registra o modelo lógico, contratos financeiros e estratégia de consistência do projeto completo.
-A fundação de autenticação, o catálogo de insumos/embalagens e as receitas/precificação foram implementados e suas migrações aplicadas ao projeto confirmado, conforme os relatórios das etapas 4, 5 e 6.
-Os demais módulos ainda serão construídos. As referências aos insumos usados estão protegidas contra exclusão e alterações que reinterpretariam quantidades. Próxima implementação: vendas e clientes na etapa 7.
+A fundação de autenticação, o catálogo de insumos/embalagens, as receitas/precificação e as vendas/clientes foram implementados e suas migrações aplicadas ao projeto confirmado, conforme os relatórios das etapas 4, 5, 6 e 7.
+Os demais módulos ainda serão construídos. As referências aos insumos usados estão protegidas contra exclusão e alterações que reinterpretariam quantidades. As vendas preservam custos/taxas históricos, e os clientes têm totais derivados das compras. Próxima implementação: gastos e categorias na etapa 8.
 As etapas seguintes concretizam os módulos restantes e validam o conjunto.
 
 ## Referências técnicas consultadas

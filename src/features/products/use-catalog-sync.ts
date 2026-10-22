@@ -15,6 +15,10 @@ export function useCatalogSync(ownerId: string) {
       ["materials", ownerId],
       ["recipes", ownerId],
       ["recipe-preview", ownerId],
+      ["sales", ownerId],
+      ["customers", ownerId],
+      ["fees", ownerId],
+      ["sale-preview", ownerId],
     ];
     const refresh = async () => {
       if (!active) return;

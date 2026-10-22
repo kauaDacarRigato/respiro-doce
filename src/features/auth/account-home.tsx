@@ -37,7 +37,7 @@ export function AccountHome({ children }: { children?: ReactNode }) {
     <>
       <Link to="/" className={location.pathname === "/" ? "active" : ""}>
         <Home size={21} />
-        <span>Início</span>
+        <span>Vendas</span>
       </Link>
       <Link
         to="/produtos"
@@ -46,10 +46,10 @@ export function AccountHome({ children }: { children?: ReactNode }) {
         <Package size={21} />
         <span>Produtos</span>
       </Link>
-      <button disabled title="Em breve">
+      <Link to="/clientes" className={location.pathname === "/clientes" ? "active" : ""}>
         <Users size={21} />
         <span>Clientes</span>
-      </button>
+      </Link>
       <button disabled title="Em breve">
         <Wallet size={21} />
         <span>Caixa</span>
