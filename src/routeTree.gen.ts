@@ -10,14 +10,21 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CaixaRouteImport } from './routes/caixa'
 import { Route as ClientesRouteImport } from './routes/clientes'
 import { Route as GastosRouteImport } from './routes/gastos'
 import { Route as ProdutosRouteImport } from './routes/produtos'
 import { Route as ReceitasRouteImport } from './routes/receitas'
+import { Route as ResumoRouteImport } from './routes/resumo'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CaixaRoute = CaixaRouteImport.update({
+  id: '/caixa',
+  path: '/caixa',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ClientesRoute = ClientesRouteImport.update({
@@ -40,43 +47,78 @@ const ReceitasRoute = ReceitasRouteImport.update({
   path: '/receitas',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ResumoRoute = ResumoRouteImport.update({
+  id: '/resumo',
+  path: '/resumo',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/caixa': typeof CaixaRoute
   '/clientes': typeof ClientesRoute
   '/gastos': typeof GastosRoute
   '/produtos': typeof ProdutosRoute
   '/receitas': typeof ReceitasRoute
+  '/resumo': typeof ResumoRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/caixa': typeof CaixaRoute
   '/clientes': typeof ClientesRoute
   '/gastos': typeof GastosRoute
   '/produtos': typeof ProdutosRoute
   '/receitas': typeof ReceitasRoute
+  '/resumo': typeof ResumoRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/caixa': typeof CaixaRoute
   '/clientes': typeof ClientesRoute
   '/gastos': typeof GastosRoute
   '/produtos': typeof ProdutosRoute
   '/receitas': typeof ReceitasRoute
+  '/resumo': typeof ResumoRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/clientes' | '/gastos' | '/produtos' | '/receitas'
+  fullPaths:
+    | '/'
+    | '/caixa'
+    | '/clientes'
+    | '/gastos'
+    | '/produtos'
+    | '/receitas'
+    | '/resumo'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/clientes' | '/gastos' | '/produtos' | '/receitas'
-  id: '__root__' | '/' | '/clientes' | '/gastos' | '/produtos' | '/receitas'
+  to:
+    | '/'
+    | '/caixa'
+    | '/clientes'
+    | '/gastos'
+    | '/produtos'
+    | '/receitas'
+    | '/resumo'
+  id:
+    | '__root__'
+    | '/'
+    | '/caixa'
+    | '/clientes'
+    | '/gastos'
+    | '/produtos'
+    | '/receitas'
+    | '/resumo'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CaixaRoute: typeof CaixaRoute
   ClientesRoute: typeof ClientesRoute
   GastosRoute: typeof GastosRoute
   ProdutosRoute: typeof ProdutosRoute
   ReceitasRoute: typeof ReceitasRoute
+  ResumoRoute: typeof ResumoRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -86,6 +128,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/caixa': {
+      id: '/caixa'
+      path: '/caixa'
+      fullPath: '/caixa'
+      preLoaderRoute: typeof CaixaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/clientes': {
@@ -116,15 +165,24 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ReceitasRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/resumo': {
+      id: '/resumo'
+      path: '/resumo'
+      fullPath: '/resumo'
+      preLoaderRoute: typeof ResumoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CaixaRoute: CaixaRoute,
   ClientesRoute: ClientesRoute,
   GastosRoute: GastosRoute,
   ProdutosRoute: ProdutosRoute,
   ReceitasRoute: ReceitasRoute,
+  ResumoRoute: ResumoRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

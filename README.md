@@ -2,7 +2,7 @@
 
 Aplicativo de precificação e caixa para a Respiro Doce.
 
-O estado atual da implementação e os testes estão descritos em [docs/etapa-8.md](docs/etapa-8.md). A base de autenticação está em [docs/etapa-4.md](docs/etapa-4.md), e o plano completo está em [docs/arquitetura.md](docs/arquitetura.md).
+O estado atual da implementação e os testes estão descritos em [docs/etapa-9.md](docs/etapa-9.md). A base de autenticação está em [docs/etapa-4.md](docs/etapa-4.md), e o plano completo está em [docs/arquitetura.md](docs/arquitetura.md).
 
 This project was built with [Lovable](https://lovable.dev).
 

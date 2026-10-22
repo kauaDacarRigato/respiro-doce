@@ -50,14 +50,17 @@ export function AccountHome({ children }: { children?: ReactNode }) {
         <Users size={21} />
         <span>Clientes</span>
       </Link>
-      <Link to="/gastos" className={location.pathname === "/gastos" ? "active" : ""}>
+      <Link
+        to="/caixa"
+        className={["/caixa", "/gastos"].includes(location.pathname) ? "active" : ""}
+      >
         <Wallet size={21} />
         <span>Caixa</span>
       </Link>
-      <button disabled title="Em breve">
+      <Link to="/resumo" className={location.pathname === "/resumo" ? "active" : ""}>
         <ChartNoAxesCombined size={21} />
         <span>Resumo</span>
-      </button>
+      </Link>
     </>
   );
   return (

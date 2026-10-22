@@ -1,3 +1,4 @@
+import { FinanceTabs } from "@/features/cash/finance-tabs";
 import { useEffect, useRef, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Pencil, Plus, ReceiptText, Search, Tags, Trash2 } from "lucide-react";
@@ -111,12 +112,7 @@ export function ExpensesPage() {
           </button>
         </div>
       </header>
-      <nav className="product-tabs" aria-label="Área financeira">
-        <span aria-current="page">Gastos</span>
-        <span className="tab-upcoming">
-          Caixa <small>Próxima etapa</small>
-        </span>
-      </nav>
+      <FinanceTabs />
       {message && (
         <p className="notice success" role="status">
           {message}
