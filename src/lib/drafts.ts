@@ -58,3 +58,15 @@ export function removeDraft(ownerId: string, form: string) {
     /* Opcional. */
   }
 }
+
+// On every authenticated identity, including after a reload, retain only that
+// account's forms. An expired session alone never calls this function.
+export function clearOtherDrafts(ownerId: string) {
+  try {
+    const ownPrefix = `${prefix}${encodeURIComponent(ownerId)}:`;
+    for (const entry of Object.keys(localStorage))
+      if (entry.startsWith(prefix) && !entry.startsWith(ownPrefix)) localStorage.removeItem(entry);
+  } catch {
+    /* Storage may be unavailable. */
+  }
+}

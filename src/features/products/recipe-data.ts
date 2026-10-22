@@ -1,3 +1,4 @@
+import { commandSignal } from "@/lib/account-requests";
 import { getSupabase } from "@/lib/supabase";
 import { MaterialCommandError, pageSize, type MaterialCommand } from "./material-data";
 import { recipeError, type Recipe, type RecipePricing } from "./recipe-domain";
@@ -50,7 +51,7 @@ export async function sendRecipeCommand(command: MaterialCommand) {
       p_recipe_id: command.id,
       p_data: command.payload,
     })
-    .abortSignal(AbortSignal.timeout(20000));
+    .abortSignal(commandSignal());
   if (result.error)
     throw new MaterialCommandError(
       recipeError(result.error),

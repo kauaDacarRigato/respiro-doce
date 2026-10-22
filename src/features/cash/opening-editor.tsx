@@ -1,3 +1,4 @@
+import { ConcurrentEditNotice } from "@/features/sync/concurrent-edit-notice";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { Sheet, SheetContent, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import { saveDraft, removeDraft } from "@/lib/drafts";
@@ -80,6 +81,7 @@ export function OpeningEditor({
         <SheetTitle>Saldo inicial</SheetTitle>
         <SheetDescription>Informe o valor que serve de base para o seu caixa.</SheetDescription>
         <form className="material-form" onSubmit={submit} aria-busy={busy}>
+          <ConcurrentEditNotice editing={true} />
           {restored && (
             <p className="notice success">Rascunho recuperado. Confira os dados antes de salvar.</p>
           )}

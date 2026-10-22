@@ -1,3 +1,4 @@
+import { ConcurrentEditNotice } from "@/features/sync/concurrent-edit-notice";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Sheet, SheetContent, SheetDescription, SheetTitle } from "@/components/ui/sheet";
@@ -93,6 +94,7 @@ export function FeeEditor({
           guardadas.
         </SheetDescription>
         <form onSubmit={submit} className="material-form">
+          <ConcurrentEditNotice editing={true} />
           {result.isError && (
             <p className="notice danger" role="alert">
               {result.error.message}

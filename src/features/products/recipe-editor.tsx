@@ -1,3 +1,4 @@
+import { ConcurrentEditNotice } from "@/features/sync/concurrent-edit-notice";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Plus, Search, Trash2 } from "lucide-react";
@@ -174,6 +175,7 @@ export function RecipeEditor({
           Monte o lote completo para descobrir o custo de cada unidade.
         </SheetDescription>
         <form onSubmit={submit} className="material-form" aria-busy={busy}>
+          <ConcurrentEditNotice editing={action === "update"} />
           {!draftAvailable && (
             <p className="notice warning" role="alert">
               Não foi possível guardar o rascunho neste navegador. Mantenha esta tela aberta até

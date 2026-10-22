@@ -41,6 +41,10 @@ A sincronização existente reconcilia também caixa, relatórios e saldo inicia
 - Contas e registros exclusivos dos testes foram removidos antes da publicação; nenhum dado da conta do proprietário foi alterado e nenhum e-mail de teste foi enviado.
 - TypeScript sem erros, lint sem erros com os nove avisos anteriores de Fast Refresh. Build de produção aprovado com o aviso anterior sobre tamanho do bundle base.
 
+## Atualização da homologação
+
+A [etapa 10](etapa-10.md) concluiu os testes integrados de autenticação, API e Realtime reais desta entrega, inclusive duas sessões e isolamento entre contas. A limitação de rede descrita acima registra o estado na ocasião da etapa 9; essa pendência foi encerrada.
+
 ## Continuidade
 
 Próxima etapa: homologação completa de sincronização, reconexão e conflitos (10). Nutrição/exportações/backups ficam na etapa 11 e aceite geral na etapa 12. Recuperação de senha no domínio definitivo continua uma validação separada da confirmação de e-mail já realizada pelo proprietário.

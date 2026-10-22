@@ -2065,3 +2065,34 @@ input:focus-visible {
   right: 0;
   transform: none;
 }
+
+.sync-status {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  padding: 10px 36px 0;
+  color: var(--muted-foreground);
+  font-size: 12px;
+}
+.sync-status > span,
+.sync-status button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.sync-status.stale,
+.sync-status.offline {
+  color: #ffd60a;
+}
+.sync-status .text-button {
+  min-height: 44px;
+  font-size: 12px;
+}
+@media (max-width: 600px) {
+  .sync-status {
+    justify-content: flex-start;
+    padding: 6px 20px;
+  }
+}

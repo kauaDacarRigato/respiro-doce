@@ -1,3 +1,4 @@
+import { ConcurrentEditNotice } from "@/features/sync/concurrent-edit-notice";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { ChevronDown, Info } from "lucide-react";
 import { Sheet, SheetContent, SheetTitle, SheetDescription } from "@/components/ui/sheet";
@@ -167,6 +168,7 @@ export function MaterialEditor({
         </SheetTitle>
         <SheetDescription>Preencha os dados da embalagem que você compra.</SheetDescription>
         <form onSubmit={submit} aria-busy={busy} className="material-form">
+          <ConcurrentEditNotice editing={action === "update"} />
           {!draftAvailable && (
             <p className="notice warning" role="alert">
               Este navegador não conseguiu guardar o rascunho. Não feche a tela antes de salvar.

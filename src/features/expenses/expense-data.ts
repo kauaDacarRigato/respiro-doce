@@ -1,3 +1,4 @@
+import { commandSignal } from "@/lib/account-requests";
 import { getSupabase } from "@/lib/supabase";
 import { MaterialCommandError } from "@/features/products/material-data";
 import { expenseError, type Category, type Expense, type ExpenseCommand } from "./expense-domain";
@@ -17,7 +18,7 @@ export async function sendExpenseCommand(command: ExpenseCommand) {
       p_target_id: command.id,
       p_data: command.payload,
     })
-    .abortSignal(AbortSignal.timeout(20000));
+    .abortSignal(commandSignal());
   if (r.error)
     throw new MaterialCommandError(
       expenseError(r.error),

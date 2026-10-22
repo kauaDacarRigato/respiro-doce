@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { act, cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { AuthChangeEvent, Session } from "@supabase/supabase-js";
@@ -28,8 +29,14 @@ function actor(id: string) {
 }
 function Probe() {
   const auth = useAuth();
+  const [draft, setDraft] = useState("");
   return (
     <>
+      <input
+        aria-label="Formulário privado"
+        value={draft}
+        onChange={(e) => setDraft(e.target.value)}
+      />
       <span data-testid="owner">{auth.session?.user.id ?? "sem acesso"}</span>
       <span data-testid="recovery">{String(auth.recovery)}</span>
       <button
@@ -88,6 +95,25 @@ describe("Ciclo de autenticação e troca de conta", () => {
     emit("SIGNED_IN", actor("TESTE-A"));
     expect(readDraft("TESTE-A", "venda")).toEqual({ quantity: 3 });
   });
+  it("reinicia formulários na troca direta de dono e preserva estado na renovação", () => {
+    mount();
+    emit("SIGNED_IN", actor("TESTE-A"));
+    fireEvent.change(screen.getByLabelText("Formulário privado"), {
+      target: { value: "dados de A" },
+    });
+    emit("TOKEN_REFRESHED", actor("TESTE-A"));
+    expect(screen.getByLabelText("Formulário privado")).toHaveValue("dados de A");
+    emit("SIGNED_IN", actor("TESTE-B"));
+    expect(screen.getByLabelText("Formulário privado")).toHaveValue("");
+  });
+  it("remove rascunhos de outros donos mesmo após reiniciar o navegador", () => {
+    saveDraft("TESTE-A", "venda", { quantity: 3 });
+    saveDraft("TESTE-B", "venda", { quantity: 2 });
+    mount();
+    emit("INITIAL_SESSION", actor("TESTE-B"));
+    expect(readDraft("TESTE-A", "venda")).toBeNull();
+    expect(readDraft("TESTE-B", "venda")).toEqual({ quantity: 2 });
+  });
   it("logout explícito limpa os rascunhos", async () => {
     mount();
     emit("SIGNED_IN", actor("TESTE-A"));
@@ -95,6 +121,29 @@ describe("Ciclo de autenticação e troca de conta", () => {
     fireEvent.click(screen.getByRole("button", { name: "Sair" }));
     await waitFor(() => expect(screen.getByTestId("owner")).toHaveTextContent("sem acesso"));
     expect(readDraft("TESTE-A", "venda")).toBeNull();
+  });
+  it("completa limpeza local quando o SDK saiu apesar da falha de revogação", async () => {
+    mount();
+    emit("SIGNED_IN", actor("TESTE-A"));
+    saveDraft("TESTE-A", "venda", { quantity: 3 });
+    mocks.signOut.mockImplementationOnce(async () => {
+      mocks.listener?.("SIGNED_OUT", null);
+      return { error: new Error("rede indisponível") };
+    });
+    fireEvent.click(screen.getByRole("button", { name: "Sair" }));
+    await waitFor(() => expect(readDraft("TESTE-A", "venda")).toBeNull());
+    expect(screen.getByTestId("owner")).toHaveTextContent("sem acesso");
+    expect(screen.queryByRole("alert")).toBeNull();
+  });
+  it("mantém dados quando o logout falhou e o SDK continua autenticado", async () => {
+    mount();
+    emit("SIGNED_IN", actor("TESTE-A"));
+    saveDraft("TESTE-A", "venda", { quantity: 3 });
+    mocks.signOut.mockResolvedValueOnce({ error: new Error("falha") });
+    fireEvent.click(screen.getByRole("button", { name: "Sair" }));
+    await screen.findByRole("alert");
+    expect(screen.getByTestId("owner")).toHaveTextContent("TESTE-A");
+    expect(readDraft("TESTE-A", "venda")).toEqual({ quantity: 3 });
   });
   it("mantém recuperação durante renovação do token e encerra após salvar", () => {
     mount();

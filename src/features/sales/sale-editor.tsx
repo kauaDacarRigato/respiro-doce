@@ -1,3 +1,4 @@
+import { ConcurrentEditNotice } from "@/features/sync/concurrent-edit-notice";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Search } from "lucide-react";
@@ -171,6 +172,7 @@ export function SaleEditor({
         <SheetTitle>{action === "update" ? "Editar venda" : "Nova venda"}</SheetTitle>
         <SheetDescription>Registre o produto, o pagamento e quem comprou.</SheetDescription>
         <form onSubmit={submit} className="material-form" aria-busy={busy}>
+          <ConcurrentEditNotice editing={action === "update"} />
           {!draftAvailable && (
             <p className="notice warning" role="alert">
               Não foi possível guardar o rascunho. Mantenha esta tela aberta até salvar.

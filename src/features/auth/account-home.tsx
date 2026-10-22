@@ -14,7 +14,19 @@ import type { ReactNode } from "react";
 import { useAuth } from "./auth-provider";
 import { getSupabase } from "@/lib/supabase";
 
+import { AccountSyncProvider } from "@/features/sync/account-sync-provider";
+import { SyncStatus } from "@/features/sync/sync-status";
+
 export function AccountHome({ children }: { children?: ReactNode }) {
+  const { session } = useAuth();
+  return (
+    <AccountSyncProvider ownerId={session!.user.id}>
+      <AccountWorkspace>{children}</AccountWorkspace>
+    </AccountSyncProvider>
+  );
+}
+
+function AccountWorkspace({ children }: { children?: ReactNode }) {
   const { session, signOut, error } = useAuth();
   const location = useLocation();
   const account = useQuery({
@@ -22,10 +34,10 @@ export function AccountHome({ children }: { children?: ReactNode }) {
     enabled: Boolean(session),
     retry: false,
     staleTime: Infinity,
-    queryFn: async () => {
+    queryFn: async ({ signal }) => {
       const client = getSupabase();
       if (!client) throw new Error("Conexão indisponível.");
-      const result = await client.rpc("initialize_account");
+      const result = await client.rpc("initialize_account").abortSignal(signal);
       if (result.error)
         throw new Error(
           "Não foi possível preparar sua área. Confira sua conexão e tente novamente.",
@@ -107,6 +119,7 @@ export function AccountHome({ children }: { children?: ReactNode }) {
             <LogOut size={20} />
           </button>
         </header>
+        <SyncStatus />
         {error && (
           <p className="notice danger" role="alert">
             {error}

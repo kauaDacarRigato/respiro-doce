@@ -1,3 +1,4 @@
+import { commandSignal } from "@/lib/account-requests";
 import { getSupabase } from "@/lib/supabase";
 import { MaterialCommandError } from "@/features/products/material-data";
 import { expenseError } from "@/features/expenses/expense-domain";
@@ -55,7 +56,7 @@ export async function readOpening(signal: AbortSignal) {
 export async function sendOpening(command: OpeningCommand) {
   const r = await client()
     .rpc("opening_balance_command", { p_command_id: command.commandId, p_data: command.payload })
-    .abortSignal(AbortSignal.timeout(20000));
+    .abortSignal(commandSignal());
   if (r.error)
     throw new MaterialCommandError(
       expenseError(r.error),

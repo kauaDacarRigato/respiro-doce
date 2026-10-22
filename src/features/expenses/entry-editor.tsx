@@ -1,3 +1,4 @@
+import { ConcurrentEditNotice } from "@/features/sync/concurrent-edit-notice";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { Sheet, SheetContent, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import { saveDraft, removeDraft } from "@/lib/drafts";
@@ -108,6 +109,7 @@ export function EntryEditor({
             : "Registre uma saída realmente paga pelo negócio."}
         </SheetDescription>
         <form onSubmit={submit} className="material-form" aria-busy={busy}>
+          <ConcurrentEditNotice editing={action === "update"} />
           {!available && (
             <p className="notice warning" role="alert">
               Este navegador não conseguiu guardar o rascunho. Mantenha a tela aberta até salvar.

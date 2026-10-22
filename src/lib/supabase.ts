@@ -1,5 +1,6 @@
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 import { readAuthConfig } from "./auth-config";
+import { requestFetch } from "./request-fetch";
 import { publicAuthConfig } from "./public-config";
 
 let browserClient: SupabaseClient | null = null;
@@ -13,6 +14,7 @@ export function getSupabase(): SupabaseClient | null {
   const config = readAuthConfig(override ? import.meta.env : publicAuthConfig);
   if (!config) return null;
   browserClient ??= createClient(config.url, config.key, {
+    global: { fetch: requestFetch },
     auth: {
       persistSession: true,
       autoRefreshToken: true,

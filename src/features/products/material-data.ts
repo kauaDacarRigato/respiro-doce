@@ -1,3 +1,4 @@
+import { commandSignal } from "@/lib/account-requests";
 import { getSupabase } from "@/lib/supabase";
 import { materialError, type Material, type MaterialKind, type Nutrition } from "./material-domain";
 export const pageSize = 30;
@@ -59,7 +60,7 @@ export async function sendMaterialCommand(command: MaterialCommand) {
       p_material_id: command.id,
       p_data: command.payload,
     })
-    .abortSignal(AbortSignal.timeout(20000));
+    .abortSignal(commandSignal());
   if (result.error)
     throw new MaterialCommandError(
       materialError(result.error),
