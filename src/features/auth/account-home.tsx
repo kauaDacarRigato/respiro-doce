@@ -50,10 +50,10 @@ export function AccountHome({ children }: { children?: ReactNode }) {
         <Users size={21} />
         <span>Clientes</span>
       </Link>
-      <button disabled title="Em breve">
+      <Link to="/gastos" className={location.pathname === "/gastos" ? "active" : ""}>
         <Wallet size={21} />
         <span>Caixa</span>
-      </button>
+      </Link>
       <button disabled title="Em breve">
         <ChartNoAxesCombined size={21} />
         <span>Resumo</span>

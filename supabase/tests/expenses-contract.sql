@@ -1,0 +1,76 @@
+begin;
+select set_config('test.a',gen_random_uuid()::text,true);
+select set_config('test.b',gen_random_uuid()::text,true);
+select set_config('test.category',gen_random_uuid()::text,true);
+select set_config('test.expense',gen_random_uuid()::text,true);
+select set_config('test.ckey',gen_random_uuid()::text,true);
+select set_config('test.ekey',gen_random_uuid()::text,true);
+insert into auth.users(id,email) values(current_setting('test.a')::uuid,'TESTE-expenses-a@example.invalid'),(current_setting('test.b')::uuid,'TESTE-expenses-b@example.invalid');
+set local role authenticated;
+select set_config('request.jwt.claim.sub',current_setting('test.a'),true);
+select public.expense_command(current_setting('test.ckey')::uuid,'expense_category','create',current_setting('test.category')::uuid,'{"name":" TESTE   Despesas "}');
+select set_config('test.payload',jsonb_build_object('description','TESTE 100% gás','amount_cents',12345,'category_id',current_setting('test.category'),'occurred_local','2026-10-20T23:59:59')::text,true);
+select public.expense_command(current_setting('test.ekey')::uuid,'expense','create',current_setting('test.expense')::uuid,current_setting('test.payload')::jsonb);
+select public.expense_command(current_setting('test.ekey')::uuid,'expense','create',current_setting('test.expense')::uuid,current_setting('test.payload')::jsonb);
+do $$ declare r jsonb;rev bigint;k uuid:=gen_random_uuid();i integer;begin
+ if (select count(*) from public.expenses)<>1 or (select revision from public.account_sync_state)<>2 then raise exception 'TESTE duplicação/revisão';end if;
+ if not exists(select 1 from public.expense_categories where name='TESTE Despesas') then raise exception 'TESTE normalização';end if;
+ begin perform public.expense_command(gen_random_uuid(),'expense_category','create',gen_random_uuid(),'{"name":"teste   despesas"}');raise exception 'TESTE nome duplicado';exception when unique_violation then null;end;
+ begin perform public.expense_command(current_setting('test.ekey')::uuid,'expense','create',current_setting('test.expense')::uuid,'{}');raise exception 'TESTE chave alterada';exception when invalid_parameter_value then null;end;
+ for i in 1..20 loop
+  perform public.expense_command(gen_random_uuid(),'expense','create',gen_random_uuid(),jsonb_build_object('description','TESTE Lançamento '||i,'amount_cents',100,'category_id',null,'occurred_local','2026-10-21T12:00:00'));
+ end loop;
+ r:=public.expense_list(null,null,'all','',0);
+ if (r->>'total')::integer<>21 or r->>'total_cents'<>'14345' or jsonb_array_length(r->'items')<>20 then raise exception 'TESTE total/página0 %',r;end if;
+ r:=public.expense_list(null,null,'all','',1);
+ if r->>'total_cents'<>'14345' or jsonb_array_length(r->'items')<>1 or r->'items'->0->>'id'<>current_setting('test.expense') then raise exception 'TESTE paginação estável';end if;
+ r:=public.expense_list('2026-10-20','2026-10-20','all','',0);
+ if r->>'total_cents'<>'12345' or (r->>'total')::integer<>1 then raise exception 'TESTE data São Paulo';end if;
+ r:=public.expense_list('2026-10-21','2026-10-21','none','',0);
+ if r->>'total_cents'<>'2000' then raise exception 'TESTE filtro sem categoria';end if;
+ r:=public.expense_list(null,null,current_setting('test.category'),'%',0);
+ if (r->>'total')::integer<>1 then raise exception 'TESTE busca literal/categoria';end if;
+ perform public.expense_command(gen_random_uuid(),'expense_category','update',current_setting('test.category')::uuid,'{"name":"TESTE Nova"}');
+ if not exists(select 1 from public.expense_catalog where category_name='TESTE Nova' and amount_cents='12345') then raise exception 'TESTE renomear categoria';end if;
+ select revision into rev from public.account_sync_state;
+ for i in 0..2 loop
+  begin perform public.expense_command(gen_random_uuid(),'expense','update',current_setting('test.expense')::uuid,current_setting('test.payload')::jsonb||jsonb_build_object('amount_cents',case i when 0 then 0 when 1 then -1 else 1.5 end));raise exception 'TESTE valor inválido';exception when invalid_parameter_value then null;end;
+ end loop;
+ begin perform public.expense_command(gen_random_uuid(),'expense','update',current_setting('test.expense')::uuid,current_setting('test.payload')::jsonb||'{"description":"TESTE alteração inválida","category_id":"00000000-0000-0000-0000-000000000001"}');raise exception 'TESTE referência inexistente';exception when no_data_found then null;end;
+ begin perform public.expense_command(gen_random_uuid(),'expense','update',current_setting('test.expense')::uuid,current_setting('test.payload')::jsonb||'{"occurred_local":"2018-11-04T00:30:00"}');raise exception 'TESTE horário inexistente';exception when invalid_parameter_value then null;end;
+ if (select revision from public.account_sync_state)<>rev or not exists(select 1 from public.expenses where description='TESTE 100% gás' and amount_cents=12345) then raise exception 'TESTE escrita parcial';end if;
+ begin update public.expenses set amount_cents=5;raise exception 'TESTE escrita direta';exception when insufficient_privilege then null;end;
+ begin delete from public.expense_categories;raise exception 'TESTE exclusão direta';exception when insufficient_privilege then null;end;
+end $$;
+select set_config('request.jwt.claim.sub',current_setting('test.b'),true);
+select public.initialize_account();
+do $$ declare r jsonb;begin
+ if exists(select 1 from public.expenses) then raise exception 'TESTE leitura cruzada';end if;
+ r:=public.expense_list(null,null,'all','',0);if (r->>'total')::integer<>0 or r->>'total_cents'<>'0' then raise exception 'TESTE total cruzado';end if;
+ begin perform public.expense_command(gen_random_uuid(),'expense','delete',current_setting('test.expense')::uuid,'{}');raise exception 'TESTE exclusão cruzada';exception when no_data_found then null;end;
+ begin perform public.expense_command(gen_random_uuid(),'expense','create',gen_random_uuid(),current_setting('test.payload')::jsonb);raise exception 'TESTE categoria cruzada';exception when no_data_found then null;end;
+ begin perform public.expense_command(gen_random_uuid(),'expense_category','delete',current_setting('test.category')::uuid,'{}');raise exception 'TESTE categoria excluída por B';exception when no_data_found then null;end;
+end $$;
+select set_config('request.jwt.claim.sub',current_setting('test.a'),true);
+do $$ declare r jsonb;k uuid:=gen_random_uuid();v_other uuid;begin
+ perform public.expense_command(k,'expense_category','delete',current_setting('test.category')::uuid,'{}');
+ perform public.expense_command(k,'expense_category','delete',current_setting('test.category')::uuid,'{}');
+ if not exists(select 1 from public.expenses where id=current_setting('test.expense')::uuid and category_id is null and amount_cents=12345) then raise exception 'TESTE categoria apagou gasto';end if;
+ r:=public.expense_command(current_setting('test.ckey')::uuid,'expense_category','create',current_setting('test.category')::uuid,'{"name":" TESTE   Despesas "}');
+ if r->>'status'<>'gone' then raise exception 'TESTE categoria ressuscitada';end if;
+ select id into v_other from public.expense_categories where name='Outros';perform public.expense_command(gen_random_uuid(),'expense_category','delete',v_other,'{}');perform public.initialize_account();
+ if exists(select 1 from public.expense_categories where name='Outros') then raise exception 'TESTE bootstrap restaurou categoria';end if;
+ perform public.expense_command(gen_random_uuid(),'expense','delete',current_setting('test.expense')::uuid,'{}');
+ r:=public.expense_command(current_setting('test.ekey')::uuid,'expense','create',current_setting('test.expense')::uuid,current_setting('test.payload')::jsonb);
+ if r->>'status'<>'gone' then raise exception 'TESTE gasto ressuscitado';end if;
+ begin perform public.expense_command(gen_random_uuid(),'expense','update',current_setting('test.expense')::uuid,current_setting('test.payload')::jsonb);raise exception 'TESTE edição tardia recriou';exception when no_data_found then null;end;
+ r:=public.expense_list(null,null,'none','',0);if r->>'total_cents'<>'2000' or (r->>'total')::integer<>20 then raise exception 'TESTE totais após excluir';end if;
+end $$;
+reset role;set local role anon;
+do $$ begin
+ begin perform * from public.expenses;raise exception 'TESTE leitura anônima';exception when insufficient_privilege then null;end;
+ begin perform public.expense_list();raise exception 'TESTE agregado anônimo';exception when insufficient_privilege then null;end;
+ begin perform public.expense_command(gen_random_uuid(),'expense','create',gen_random_uuid(),'{}');raise exception 'TESTE comando anônimo';exception when insufficient_privilege then null;end;
+end $$;
+reset role;rollback;
+select 'Gastos/categorias: valores, filtros, totais de todas as páginas, datas, referências, exclusão segura, RLS, atomicidade e idempotência aprovados. Dados de teste revertidos.' as resultado;

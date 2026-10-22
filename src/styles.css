@@ -1643,3 +1643,100 @@ input:focus-visible {
     flex-basis: 160px;
   }
 }
+
+/* Gastos e categorias */
+.expenses-total {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 22px;
+  margin: 22px 0;
+}
+.expenses-total > div {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  gap: 8px;
+}
+.expenses-total span,
+.expenses-total p,
+.expenses-total small {
+  color: var(--muted-foreground);
+  font-size: 13px;
+}
+.expenses-total strong {
+  font-size: 30px;
+  font-weight: 650;
+  overflow-wrap: anywhere;
+}
+.expense-card-bottom {
+  display: flex;
+  gap: 14px;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 24px;
+}
+.expense-card-bottom > strong {
+  color: var(--destructive);
+  font-size: 24px;
+  font-weight: 650;
+  overflow-wrap: anywhere;
+}
+.expense-category {
+  background: var(--background);
+  border: 1px solid var(--border);
+  padding: 7px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  color: var(--muted-foreground);
+  overflow-wrap: anywhere;
+}
+.category-picker {
+  width: 100%;
+  min-width: 0;
+}
+.category-picker > button {
+  width: 100%;
+  min-height: 48px;
+  justify-content: space-between;
+}
+.category-picker .recipe-picker {
+  margin-top: 10px;
+}
+.categories-manager {
+  display: grid;
+  gap: 18px;
+  margin-top: 24px;
+}
+.category-rows {
+  display: grid;
+}
+.category-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+}
+.category-row > strong {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.expense-filters > .field {
+  align-self: start;
+}
+@media (max-width: 760px) {
+  .expense-filters > .field:last-of-type {
+    flex-basis: 100%;
+  }
+  .expense-filters .field {
+    min-width: 130px;
+  }
+}
