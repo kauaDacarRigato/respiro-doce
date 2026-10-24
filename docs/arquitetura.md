@@ -1,6 +1,6 @@
 # Arquitetura do Precificador e Caixa — Respiro Doce
 
-Status: desenho técnico das etapas 1 a 3. Este documento descreve o plano completo; consulte [etapa-10.md](etapa-10.md) para sincronização/reconexão/conflitos, [etapa-9.md](etapa-9.md) para caixa/resumos, [etapa-8.md](etapa-8.md) para gastos/categorias e [etapa-7.md](etapa-7.md) para vendas/clientes e [etapa-6.md](etapa-6.md) para receitas/precificação e [etapa-5.md](etapa-5.md) para o catálogo de insumos e [etapa-4.md](etapa-4.md) para a fundação de autenticação.
+Status: desenho técnico das etapas 1 a 3. Este documento descreve o plano completo; consulte [etapa-11.md](etapa-11.md) para memória nutricional/exportações/backups, [etapa-10.md](etapa-10.md) para sincronização/reconexão/conflitos, [etapa-9.md](etapa-9.md) para caixa/resumos, [etapa-8.md](etapa-8.md) para gastos/categorias e [etapa-7.md](etapa-7.md) para vendas/clientes e [etapa-6.md](etapa-6.md) para receitas/precificação e [etapa-5.md](etapa-5.md) para o catálogo de insumos e [etapa-4.md](etapa-4.md) para a fundação de autenticação.
 Data: 21/10/2026.
 
 ## 1. Escopo e base existente
@@ -234,7 +234,7 @@ Constraints para limites e coerência de unidades/tipos; rejeitar valores que ul
 
 Este documento registra o modelo lógico, contratos financeiros e estratégia de consistência do projeto completo.
 A fundação de autenticação, o catálogo de insumos/embalagens, as receitas/precificação, as vendas/clientes, os gastos/categorias e o caixa/resumos foram implementados e suas migrações aplicadas ao projeto confirmado, conforme os relatórios das etapas 4, 5, 6, 7, 8 e 9.
-Os demais módulos ainda serão construídos. As referências aos insumos usados estão protegidas contra exclusão e alterações que reinterpretariam quantidades. As vendas preservam custos/taxas históricos, e os clientes têm totais derivados das compras. Gastos têm filtros, totais e categorias que podem ser removidas sem apagar os lançamentos. Caixa e resumos usam os valores históricos com totais derivados e saldo inicial datado único. Sincronização/reconexão/conflitos foram implementados e homologados, conforme a etapa 10. Próxima etapa: nutrição, exportações e backups (11).
+Os demais módulos ainda serão construídos. As referências aos insumos usados estão protegidas contra exclusão e alterações que reinterpretariam quantidades. As vendas preservam custos/taxas históricos, e os clientes têm totais derivados das compras. Gastos têm filtros, totais e categorias que podem ser removidas sem apagar os lançamentos. Caixa e resumos usam os valores históricos com totais derivados e saldo inicial datado único. Sincronização/reconexão/conflitos foram implementados e homologados, conforme a etapa 10. A etapa 11 entregou memória nutricional estimada (com PNG explicitamente separado de rótulo para embalagem), Excel de clientes, cópia completa versionada e ensaio de restauração isolada. Próxima etapa: revisão geral e aceite (12). O enquadramento e a liberação de um rótulo de embalagem permanecem condicionados à revisão específica documentada na etapa 11.
 As etapas seguintes concretizam os módulos restantes e validam o conjunto.
 
 ## Referências técnicas consultadas

@@ -1,3 +1,4 @@
+import { CustomerExportButton } from "@/features/data/customer-export-button";
 import { useEffect, useRef, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Search, Trash2, Users } from "lucide-react";
@@ -153,6 +154,7 @@ export function CustomersPage() {
             recente.
           </p>
         </div>
+        <CustomerExportButton search={term} online={online} />
       </header>
       {message && (
         <p className="notice success" role="status">

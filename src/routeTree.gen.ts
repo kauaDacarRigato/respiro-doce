@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CaixaRouteImport } from './routes/caixa'
 import { Route as ClientesRouteImport } from './routes/clientes'
+import { Route as DadosRouteImport } from './routes/dados'
 import { Route as GastosRouteImport } from './routes/gastos'
 import { Route as ProdutosRouteImport } from './routes/produtos'
 import { Route as ReceitasRouteImport } from './routes/receitas'
@@ -30,6 +31,11 @@ const CaixaRoute = CaixaRouteImport.update({
 const ClientesRoute = ClientesRouteImport.update({
   id: '/clientes',
   path: '/clientes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DadosRoute = DadosRouteImport.update({
+  id: '/dados',
+  path: '/dados',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GastosRoute = GastosRouteImport.update({
@@ -57,6 +63,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/caixa': typeof CaixaRoute
   '/clientes': typeof ClientesRoute
+  '/dados': typeof DadosRoute
   '/gastos': typeof GastosRoute
   '/produtos': typeof ProdutosRoute
   '/receitas': typeof ReceitasRoute
@@ -66,6 +73,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/caixa': typeof CaixaRoute
   '/clientes': typeof ClientesRoute
+  '/dados': typeof DadosRoute
   '/gastos': typeof GastosRoute
   '/produtos': typeof ProdutosRoute
   '/receitas': typeof ReceitasRoute
@@ -76,6 +84,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/caixa': typeof CaixaRoute
   '/clientes': typeof ClientesRoute
+  '/dados': typeof DadosRoute
   '/gastos': typeof GastosRoute
   '/produtos': typeof ProdutosRoute
   '/receitas': typeof ReceitasRoute
@@ -87,6 +96,7 @@ export interface FileRouteTypes {
     | '/'
     | '/caixa'
     | '/clientes'
+    | '/dados'
     | '/gastos'
     | '/produtos'
     | '/receitas'
@@ -96,6 +106,7 @@ export interface FileRouteTypes {
     | '/'
     | '/caixa'
     | '/clientes'
+    | '/dados'
     | '/gastos'
     | '/produtos'
     | '/receitas'
@@ -105,6 +116,7 @@ export interface FileRouteTypes {
     | '/'
     | '/caixa'
     | '/clientes'
+    | '/dados'
     | '/gastos'
     | '/produtos'
     | '/receitas'
@@ -115,6 +127,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CaixaRoute: typeof CaixaRoute
   ClientesRoute: typeof ClientesRoute
+  DadosRoute: typeof DadosRoute
   GastosRoute: typeof GastosRoute
   ProdutosRoute: typeof ProdutosRoute
   ReceitasRoute: typeof ReceitasRoute
@@ -142,6 +155,13 @@ declare module '@tanstack/react-router' {
       path: '/clientes'
       fullPath: '/clientes'
       preLoaderRoute: typeof ClientesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dados': {
+      id: '/dados'
+      path: '/dados'
+      fullPath: '/dados'
+      preLoaderRoute: typeof DadosRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/gastos': {
@@ -179,6 +199,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CaixaRoute: CaixaRoute,
   ClientesRoute: ClientesRoute,
+  DadosRoute: DadosRoute,
   GastosRoute: GastosRoute,
   ProdutosRoute: ProdutosRoute,
   ReceitasRoute: ReceitasRoute,

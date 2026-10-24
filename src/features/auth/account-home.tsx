@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Link, useLocation } from "@tanstack/react-router";
 import {
   CakeSlice,
+  DatabaseBackup,
   LogOut,
   Home,
   Package,
@@ -88,6 +89,10 @@ function AccountWorkspace({ children }: { children?: ReactNode }) {
         </a>
         <nav aria-label="Menu principal">{links}</nav>
         <div className="sidebar-bottom">
+          <Link to="/dados" className="secondary-button">
+            <DatabaseBackup size={17} />
+            Dados e backup
+          </Link>
           <span>{session?.user.email}</span>
           <button
             className="secondary-button"
@@ -109,6 +114,9 @@ function AccountWorkspace({ children }: { children?: ReactNode }) {
               Respiro Doce<small>PRECIFICADOR E CAIXA</small>
             </span>
           </a>
+          <Link to="/dados" className="icon-button" aria-label="Dados e backup">
+            <DatabaseBackup size={20} />
+          </Link>
           <button
             className="icon-button"
             aria-label="Sair da conta"

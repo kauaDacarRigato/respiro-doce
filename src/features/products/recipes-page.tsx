@@ -1,3 +1,4 @@
+import { NutritionSheet } from "@/features/nutrition/nutrition-sheet";
 import { useEffect, useRef, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { ChefHat, Pencil, Plus, Search, Trash2 } from "lucide-react";
@@ -22,6 +23,7 @@ export function RecipesPage() {
   const ownerId = session!.user.id;
   const cache = useQueryClient();
   const online = useCatalogSync(ownerId);
+  const [nutrition, setNutrition] = useState<string | null>(null);
   const [search, setSearch] = useState("");
   const [term, setTerm] = useState("");
   const [page, setPage] = useState(0);
@@ -237,6 +239,9 @@ export function RecipesPage() {
                 </div>
               </div>
               {!item.pricing.ready && <p className="notice warning">{item.pricing.reason}</p>}
+              <button className="secondary-button" onClick={() => setNutrition(item.id)}>
+                Ver nutrição
+              </button>
               <details className="recipe-card-details">
                 <summary>Composição e cálculo</summary>
                 <div className="saved-components">
@@ -279,6 +284,9 @@ export function RecipesPage() {
             Próxima
           </button>
         </div>
+      )}
+      {nutrition && (
+        <NutritionSheet owner={ownerId} id={nutrition} onClose={() => setNutrition(null)} />
       )}
       {editor && (
         <RecipeEditor

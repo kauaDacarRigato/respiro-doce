@@ -16,6 +16,7 @@ const accountKeys = new Set([
   "cash",
   "reports",
   "opening",
+  "nutrition",
 ]);
 export function useAccountSyncEngine(ownerId: string): SyncState {
   const cache = useQueryClient();
