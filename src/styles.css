@@ -2243,3 +2243,48 @@ input:focus-visible {
     width: 43%;
   }
 }
+
+/* PWA: faixa em fluxo normal, sem cobrir formulários ou a navegação. */
+body {
+  padding-top: env(safe-area-inset-top);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+}
+.pwa-controls {
+  border-bottom: 1px solid var(--border);
+  background: var(--card);
+  padding: 8px 20px;
+  font-size: 12px;
+}
+.pwa-actions,
+.pwa-update {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.pwa-controls .text-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 36px;
+}
+.pwa-help,
+.pwa-message {
+  max-width: 680px;
+  margin: 8px auto;
+  line-height: 1.6;
+}
+.pwa-help p {
+  margin: 8px 0;
+  color: var(--muted-foreground);
+}
+.pwa-message {
+  color: var(--primary);
+}
+@media (display-mode: standalone) {
+  .access-layout {
+    min-height: 100dvh;
+  }
+}

@@ -1,6 +1,6 @@
 # Arquitetura do Precificador e Caixa — Respiro Doce
 
-Status: desenho técnico das etapas 1 a 3. Este documento descreve o plano completo; consulte [etapa-11.md](etapa-11.md) para memória nutricional/exportações/backups, [etapa-10.md](etapa-10.md) para sincronização/reconexão/conflitos, [etapa-9.md](etapa-9.md) para caixa/resumos, [etapa-8.md](etapa-8.md) para gastos/categorias e [etapa-7.md](etapa-7.md) para vendas/clientes e [etapa-6.md](etapa-6.md) para receitas/precificação e [etapa-5.md](etapa-5.md) para o catálogo de insumos e [etapa-4.md](etapa-4.md) para a fundação de autenticação.
+Status: desenho técnico das etapas 1 a 3. Este documento descreve o plano completo; consulte [etapa-11-5.md](etapa-11-5.md) para instalação PWA, atualizações e tela offline, [etapa-11.md](etapa-11.md) para memória nutricional/exportações/backups, [etapa-10.md](etapa-10.md) para sincronização/reconexão/conflitos, [etapa-9.md](etapa-9.md) para caixa/resumos, [etapa-8.md](etapa-8.md) para gastos/categorias e [etapa-7.md](etapa-7.md) para vendas/clientes e [etapa-6.md](etapa-6.md) para receitas/precificação e [etapa-5.md](etapa-5.md) para o catálogo de insumos e [etapa-4.md](etapa-4.md) para a fundação de autenticação.
 Data: 21/10/2026.
 
 ## 1. Escopo e base existente

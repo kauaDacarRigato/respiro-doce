@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <rect width="512" height="512" fill="#141416"/>
+  <rect x="70" y="70" width="372" height="372" rx="100" fill="#173523"/>
+  <!-- CakeSlice, Lucide (ISC), mesma identidade do aplicativo. -->
+  <g transform="translate(136 136) scale(10)" fill="none" stroke="#65d77c" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M16 13H3M16 17H3"/>
+    <path d="m7.2 7.9-3.388 2.5A2 2 0 0 0 3 12.01V20a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1v-8.654c0-2-2.44-6.026-6.44-8.026a1 1 0 0 0-1.082.057L10.4 5.6"/>
+    <circle cx="9" cy="7" r="2"/>
+  </g>
+</svg>
